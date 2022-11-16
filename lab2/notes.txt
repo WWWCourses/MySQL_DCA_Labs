@@ -1,0 +1,14 @@
+users
+name  | age
+Ivan  | 51
+51
+
+51  	  dec =>binary 00110011
+'51'    unicode => 1101011212112
+
+
+CREATE TABLE users(
+  first_name varchar(4),
+  age smallint(3)
+);
+
