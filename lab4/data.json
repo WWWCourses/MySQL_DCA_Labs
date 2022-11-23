@@ -1,0 +1,21 @@
+// ["Ada", 23]
+
+// {
+// 	"userName":"Ada",
+// 	"age":23
+// }
+
+[
+	{
+		"userName":"Ada",
+		"age":23,
+		"address":["Sofia","Bulgaria"]
+	},
+	{
+		"userName":"Ada",
+		"age":23,
+		"address":["Sofia","Bulgaria"]
+	}
+]
+
+
