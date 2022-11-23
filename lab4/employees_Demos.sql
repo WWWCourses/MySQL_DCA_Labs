@@ -1,8 +1,5 @@
 use employees;
 
--- TODO:
--- select TOP 10 * from employees;
-
 
 SELECT COUNT(*) FROM employees LIMIT ;
 
