@@ -9,7 +9,6 @@
 -- group by lname
 -- order by count(*) DESC;
 
--- TODO: find max books count
 SELECT count(author_id)
 FROM books
 GROUP BY author_id;
