@@ -44,21 +44,69 @@ SELECT CONCAT(a.fname," ",a.lname) as author ,b.book_name, b.price
 FROM authors as a
 JOIN books as b
 ON a.id=b.author_id
-WHERE a.fname='Kurt'
-AND b.price=(SELECT MAX(price) FROM books);
+WHERE a.fname='Kurt';
 
-UPDATE books SET price=45.5 where id=1;
-UPDATE books SET price=55.9 where id=2;
-UPDATE books SET price=55.9 where id=3;
 
--- TODO:check why price not inserted as DECIMAL(6)
-(IN id_to_update INT, IN new_price DECIMAL(6,2))
+
+CREATE PROCEDURE spGetAuthorBooks(IN author_name VARCHAR(50))
 BEGIN
-  UPDATE books SET price=new_price where id=id_to_update;
+	SELECT CONCAT(a.fname," ",a.lname) as author ,b.book_name, b.price
+	FROM authors as a
+	JOIN books as b
+	ON a.id=b.author_id
+	WHERE a.fname=author_name;
 END;
 
-CALL spUpdatePrice(2,55.9);
-CALL spUpdatePrice(3,12.5);
 
-13.00
+DELIMITER //
+CREATE PROCEDURE spGetMostExpensiveAuthorBook
+(IN author_fname VARCHAR(200), OUT max_price DECIMAL(6.2))
+BEGIN
+	SELECT MAX(b.price) INTO max_price
+  	FROM books as b
+  	JOIN authors as a
+  	ON b.author_id=a.id
+  	WHERE a.fname=author_fname;
+END //
+DELIMITER ;
+
+
+
+-- TASK: execute next after 5 minutes
+-- CREATE EVENT createTestTable
+-- ON SCHEDULE
+-- 	-- AT  '2022-12-19 04:49:00'
+-- 	AT CURRENT_TIMESTAMP + INTERVAL 5 MINUTE
+-- DO
+-- 	CALL spGetAuthorBooks('Kurt');
+
+-- CALL spGetAuthorBooks('Douglas');
+
+
+
+SET @x = 999;
+SELECT @x;
+
+
+CREATE PROCEDURE spTestVars(INOUT x_seesion INT)
+BEGIN
+	DECLARE x INT DEFAULT 0;
+
+	SET x = 5;
+	SET x = x+1;
+
+	SET x_seesion = x_seesion+1;
+
+	SELECT x, x_seesion;
+END;
+
+CALL spTestVars(@x);
+CALL spTestVars(@x);
+
+SELECT MAX(price) FROM books INTO @x;
+
+SELECT @x;
+
+
+
 
